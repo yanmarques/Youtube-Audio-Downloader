@@ -1,0 +1,22 @@
+{
+  "name": "music_downloader_to_usb",
+  "version": "1.0.0",
+  "description": "A youtube audio downloader",
+  "main": "webpack.config.js",
+  "scripts": {
+    "dev": "webpack"
+  },
+  "keywords": [
+    "downloader",
+    "youtube",
+    "python",
+    "php",
+    "javascript"
+  ],
+  "author": "Yan Marques",
+  "license": "ISC",
+  "dependencies": {
+    "babel-core": "^6.26.0",
+    "webpack": "^3.5.5"
+  }
+}

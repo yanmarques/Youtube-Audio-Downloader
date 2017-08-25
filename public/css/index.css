@@ -1,0 +1,48 @@
+.form-search{
+    background-color: #ffffff;
+}
+
+.slide{
+    height: -webkit-fill-available;
+}
+
+.is-loading{
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+#js-message{
+    display: none;
+}
+
+#footer {
+    background-color: #262626 !important;
+}
+
+.nav-icon {
+    color: #ffff !important;
+}
+
+#heart-icon {
+    color: #ff1a1a !important;
+}
+
+.text-footer {
+    color: #fff;
+}
+
+.background-img-1{
+    background-image: url(../img/d67qwdtqw6dt.jpeg);
+}
+
+.background-img-2{
+    background-image: url(../img/8d8wksos2i3kwg.jpeg);
+}
+
+.background-img-3{
+    background-image: url(../img/iahe7d78so2l.jpeg);
+}
+
+.background-img-4{
+    background-image: url(../img/usjwkausj83k.jpeg);
+}
