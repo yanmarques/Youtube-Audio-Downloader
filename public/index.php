@@ -55,7 +55,7 @@
                     <p>
                         Youtube Audio Downloader is a simple platform where you can download any music from a Youtube video.<br/>
                         You just have to paste the full url of the video on the search form.<br/>
-                        Feel free to watch our development on github <a class="uk-margin-small-right uk-icon" href="" uk-icon="icon: github; ratio: 1.3"></a><br/><br/>
+                        Feel free to watch our development on github <a class="uk-margin-small-right uk-icon" target="_blank" href="https://github.com/yanmarques/Youtube-Audio-Downloader" uk-icon="icon: github; ratio: 1.3"></a><br/><br/>
 
                         Hope U enjoy...
                     </p>
@@ -76,10 +76,10 @@
         <div class="uk-navbar-right">
             <ul class="uk-navbar-nav uk-margin-large-right">
                 <li class="uk-active">
-                    <a href="#" class="nav-icon" uk-icon="icon: github; ratio: 1.7"></a>
+                    <a target="_blank" href="https://github.com/yanmarques/Youtube-Audio-Downloader" class="nav-icon" uk-icon="icon: github; ratio: 1.7"></a>
                 </li>
                 <li>
-                    <a href="#" class="nav-icon" uk-icon="icon: linkedin; ratio: 1.7"></a>
+                    <a target="_blank" href="https://www.linkedin.com/in/yan-marques-b52185120/" class="nav-icon" uk-icon="icon: linkedin; ratio: 1.7"></a>
                 </li>
             </ul>
         </div>
