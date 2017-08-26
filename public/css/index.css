@@ -31,6 +31,24 @@
     color: #fff;
 }
 
+.section-content-img{
+    max-width: 100%;
+    height: 300px;
+    border-radius: 5px;
+    -webkit-box-shadow: 2px 15px 93px -13px rgba(0,0,0,1);
+    -moz-box-shadow: 2px 15px 93px -13px rgba(0,0,0,1);
+    box-shadow: 2px 15px 93px -13px rgba(0,0,0,1);
+    box-sizing: border-box;
+}
+
+section, .uk-container {
+    padding: 50px 0;
+}
+
+.text-content-ident {
+    text-indent: 30px;
+}
+
 .background-img-1{
     background-image: url(../img/d67qwdtqw6dt.jpeg);
 }

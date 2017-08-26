@@ -23,8 +23,8 @@ export default class Download {
      *
      * @param {String} title
      */
-    set path(title) {
-        this._path = `app/Controllers/Api/uploads/${title}.mp3`;
+    set path(path) {
+        this._path = path;
     }
 
     /**

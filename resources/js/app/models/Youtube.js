@@ -1,3 +1,8 @@
+import Url from '../helpers/Url.js';
+import HttpService from '../services/HttpService.js';
+import Modal from '../views/Modal.js';
+import Loader from '../views/Loader.js';
+
 export default class Youtube {
 
     /**
@@ -6,6 +11,8 @@ export default class Youtube {
     constructor() {
         this._id;
         this._title;
+        this._http    = new HttpService();
+        this._loader  = new Loader();
     }
 
     /**
@@ -48,6 +55,13 @@ export default class Youtube {
 
         let frame = document.querySelector('#js-youtube');
         frame.innerHTML = this._template(this._id);
+
+        $(function() {
+            $('iframe[src*="www.youtube.com"]').each(function() {
+                $(this).css('max-width', '100%');
+                UIkit.responsiveElement(this);
+            });
+        });
     }
 
     /**
@@ -69,6 +83,7 @@ export default class Youtube {
     }
 
     /**
+     * TODO -> Youtube API
      * Template com o frame do video
      * Qualquer mudanca no html do frame do video deve ser realizada aqui
      *
@@ -77,7 +92,7 @@ export default class Youtube {
      */
     _template(id) {
         return `<div class="video-frame">
-                    <iframe id="ytplayer" type="text/html" width="640" height="390" src="http://www.youtube.com/embed/${id}?autoplay=1" frameborder="0" allowfullscreen/>
+                    <iframe id="ytplayer" type="text/html" width="640" height="360" src="http://www.youtube.com/embed/${id}?autoplay=1" frameborder="0" uk-responsive/>
                 </div>
         `;
     }

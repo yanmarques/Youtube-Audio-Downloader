@@ -27,7 +27,9 @@ export default class Loader{
     stop() {
         this._actions.show();
         this._body.classList.remove(this._classBackgroundLoading);
-        document.querySelector('#' + this._loaderId).remove();
+        this._body.removeAttribute("style");
+        document.querySelector('html').removeAttribute("class");
+        document.querySelector(this._loaderId).remove();
     }
 
     /**
@@ -45,7 +47,7 @@ export default class Loader{
      * @return {String}
      */
     get _loaderId() {
-        return 'js-loader-img';
+        return '#js-loader';
     }
 
     /**

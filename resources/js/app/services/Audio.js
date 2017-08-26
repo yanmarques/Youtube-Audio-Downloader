@@ -4,8 +4,6 @@ import Loader from '../views/Loader.js';
 import Url from '../helpers/Url.js';
 import Bind from '../helpers/Bind.js';
 import Modal from '../views/Modal.js';
-import DownloadView from '../views/DownloadView.js';
-import Download from '../views/Download.js';
 import Notification from '../views/Notification';
 import NotificationView from '../views/NotificationView';
 import WaitForDownload from '../views/WaitForDownload.js';
@@ -24,15 +22,6 @@ export default class Audio {
                 new NotificationView('#js-message'),
                 'text'
         );
-
-        // Adiciona um proxy na classe download para atualizar a DownloadView
-        // quando o metodo text for chamado
-        this._download = new Bind(
-                new Download(),
-                new DownloadView('#js-actions'),
-                'text'
-        );
-
 
         this._http    = new HttpService();
         this._loader  = new Loader();
@@ -60,13 +49,12 @@ export default class Audio {
 
                 this._wait.render();
 
-                this._download.path = this._youtube.title;
-                this._download.title = attributes[0];
-
                 let urlAudio = Url.convert('/app/Controllers/Api/Audio.php',
                         `title=${this._youtube.title}`,
                         `id=${this._youtube.id}`);
-                resolve(this._http.get(urlAudio));
+                console.log(this._youtube);
+                console.log(attributes);
+                resolve([this._http.get(urlAudio), this._youtube, attributes[0]]);
             })
             .catch(err => {
                 this._loader.stop();
