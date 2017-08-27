@@ -21,7 +21,10 @@ export default class DownloadView extends View {
      */
     template(model) {
         return `
-            <a href="${model.path}" class="uk-button uk-button-secondary js-download-audio" download>${model.text}</a>
+            <a href="${model.path}" class="uk-button uk-button-secondary js-download-audio" download>
+                <span uk-icon="icon: download; ratio: 1.3" style="color: #fff;"></span>
+                ${model.text}
+            </a>
         `;
     }
 }
