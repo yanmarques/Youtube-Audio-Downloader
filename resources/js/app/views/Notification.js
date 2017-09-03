@@ -38,7 +38,7 @@ export default class Notification {
 
     /**
      * Seta o tipo da notificacao
-     * Tipos disponiveis - success, danger, info, warning
+     * Tipos disponiveis - success, danger
      *
      * @param {String} text
      */

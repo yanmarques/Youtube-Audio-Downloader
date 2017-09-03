@@ -52,8 +52,7 @@ export default class Audio {
                 let urlAudio = Url.convert('/app/Controllers/Api/Audio.php',
                         `title=${this._youtube.title}`,
                         `id=${this._youtube.id}`);
-                console.log(this._youtube);
-                console.log(attributes);
+                        
                 resolve([this._http.get(urlAudio), this._youtube, attributes[0]]);
             })
             .catch(err => {

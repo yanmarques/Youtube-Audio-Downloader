@@ -42,17 +42,26 @@ export default class RequestController {
                 let youtube = response[1];
                 let title = response[2];
 
-                response[0].then(() => {
-                    this._notification.type = 'success';
-                    this._notification.text = 'Sua musica esta pronta para download...';
-
-                    this._download.path = youtube.path;
-                    this._download.title = title;
-                    this._download.text = `Download`;
-                });
+                response[0].then(response => this._handleResponse(response, youtube, title));
             }).catch(err => {
                 this._notification.type = 'danger'
                 this._notification.text = err
             })
+    }
+
+    _handleResponse(response, youtube, title) {
+        if (response) {
+            this._notification.type = 'success';
+            this._notification.text = 'Sua musica esta pronta para download...';
+            this._download.path = youtube.path;
+            this._download.title = title;
+            this._download.text = `Download`;
+            return;
+        }
+
+        this._notification.type = 'danger';
+        this._notification.text = 'Ooops... Ocorreu um erro no seu download. Talvez a url esteja invalida';
+        this._download.disabled = true;
+        this._download.text = `Ocorreu um erro`;
     }
 }

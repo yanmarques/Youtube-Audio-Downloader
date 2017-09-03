@@ -20,6 +20,11 @@ export default class DownloadView extends View {
      * @return {HTML}
      */
     template(model) {
+
+        const isDisabled = model.disabled;
+
+        if (isDisabled) return '';
+
         return `
             <a href="${model.path}" class="uk-button uk-button-secondary js-download-audio" download>
                 <span uk-icon="icon: download; ratio: 1.3" style="color: #fff;"></span>

@@ -7,6 +7,7 @@ export default class Download {
         this._text;
         this._path;
         this._title;
+        this._disabled = false;
     }
 
     /**
@@ -34,6 +35,18 @@ export default class Download {
      */
     set title(title) {
         this._title = title;
+    }
+
+    set disabled(option) {
+        if (typeof option !== 'boolean') {
+            throw new Error(`The argument must be a bool.${typeof option} given.`);
+        }
+
+        this._disabled = option;
+    }
+
+    get disabled() {
+        return this._disabled;
     }
 
     /**

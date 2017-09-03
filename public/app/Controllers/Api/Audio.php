@@ -7,7 +7,7 @@ use App\Controllers\Api\AudioController;
 
 // Instancia a classe AudioController para fazer a requisicao do audio
 $audioController = new AudioController($_GET);
-$audioController->requestAudio();
+$response = $audioController->requestAudio();
 
 header('Content-Type: application/json');
-echo json_encode(true);
+echo json_encode($response);

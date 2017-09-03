@@ -392,7 +392,7 @@ class Notification {
 
     /**
      * Seta o tipo da notificacao
-     * Tipos disponiveis - success, danger, info, warning
+     * Tipos disponiveis - success, danger
      *
      * @param {String} text
      */
@@ -679,18 +679,27 @@ class RequestController {
                 let youtube = response[1];
                 let title = response[2];
 
-                response[0].then(() => {
-                    this._notification.type = 'success';
-                    this._notification.text = 'Sua musica esta pronta para download...';
-
-                    this._download.path = youtube.path;
-                    this._download.title = title;
-                    this._download.text = `Download`;
-                });
+                response[0].then(response => this._handleResponse(response, youtube, title));
             }).catch(err => {
                 this._notification.type = 'danger'
                 this._notification.text = err
             })
+    }
+
+    _handleResponse(response, youtube, title) {
+        if (response) {
+            this._notification.type = 'success';
+            this._notification.text = 'Sua musica esta pronta para download...';
+            this._download.path = youtube.path;
+            this._download.title = title;
+            this._download.text = `Download`;
+            return;
+        }
+
+        this._notification.type = 'danger';
+        this._notification.text = 'Ooops... Ocorreu um erro no seu download. Talvez a url esteja invalida';
+        this._download.disabled = true;
+        this._download.text = `Ocorreu um erro`;
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = RequestController;
@@ -816,8 +825,7 @@ class Audio {
                 let urlAudio = __WEBPACK_IMPORTED_MODULE_3__helpers_Url_js__["a" /* default */].convert('/app/Controllers/Api/Audio.php',
                         `title=${this._youtube.title}`,
                         `id=${this._youtube.id}`);
-                console.log(this._youtube);
-                console.log(attributes);
+                        
                 resolve([this._http.get(urlAudio), this._youtube, attributes[0]]);
             })
             .catch(err => {
@@ -895,7 +903,7 @@ class Youtube {
      * @return {String} path
      */
     get path() {
-        return `app/Controllers/Api/uploads/${this._title}.mp3`;
+        return `app/uploads/${this._title}.mp3`;
     }
 
     /**
@@ -1010,6 +1018,7 @@ class Download {
         this._text;
         this._path;
         this._title;
+        this._disabled = false;
     }
 
     /**
@@ -1037,6 +1046,18 @@ class Download {
      */
     set title(title) {
         this._title = title;
+    }
+
+    set disabled(option) {
+        if (typeof option !== 'boolean') {
+            throw new Error(`The argument must be a bool.${typeof option} given.`);
+        }
+
+        this._disabled = option;
+    }
+
+    get disabled() {
+        return this._disabled;
     }
 
     /**
@@ -1089,6 +1110,11 @@ class DownloadView extends __WEBPACK_IMPORTED_MODULE_0__View_js__["a" /* default
      * @return {HTML}
      */
     template(model) {
+
+        const isDisabled = model.disabled;
+
+        if (isDisabled) return '';
+
         return `
             <a href="${model.path}" class="uk-button uk-button-secondary js-download-audio" download>
                 <span uk-icon="icon: download; ratio: 1.3" style="color: #fff;"></span>

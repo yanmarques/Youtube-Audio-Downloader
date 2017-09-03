@@ -39,7 +39,7 @@ export default class Youtube {
      * @return {String} path
      */
     get path() {
-        return `app/Controllers/Api/uploads/${this._title}.mp3`;
+        return `app/uploads/${this._title}.mp3`;
     }
 
     /**
