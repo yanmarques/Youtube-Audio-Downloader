@@ -27,7 +27,8 @@ class YoutubePreview {
      */
     public function preview()
     {
-        $linkPreview = new LinkPreview($this->request['url']);
+        var_dump($this->resolveUrl());die();
+        $linkPreview = new LinkPreview($this->resolveUrl());
 
         $parsed = $linkPreview->getParsed();
 
@@ -43,5 +44,18 @@ class YoutubePreview {
         }
 
         return json_encode([$attr]);
+    }
+
+    /**
+     * Resolve a url convertendo para url padrao
+     *
+     * @return string
+     */
+    private function resolveUrl() {
+        if (preg_match('/m.youtube/', $this->request['url'])) {
+            return preg_replace('/m./', 'www.', $this->request['url'], 1);
+        }
+
+        return $this->request['url'];
     }
 }
