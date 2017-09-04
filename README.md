@@ -1,4 +1,4 @@
-[![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][npm-url] [![Build Status][travis-image]][travis-url]
+[![NPM version][npm-image]][npm-url]]]
 
 ## Youtube-Audio-Downloader
 - **Simple** - A simple use platform to download the audio from YouTube videos.
@@ -6,15 +6,16 @@
 - **No Ads/No Limit Bullshit** - Download what you want without downloads limit and without ads.
 
 ## Npm commands
-    - **Development**
-    ```sh
-    npm run dev
-    ```
 
-    - **Production**
-    ```sh
-    npm run production
-    ```
+- **Development**
+```sh
+npm run dev
+```
+
+- **Production**
+```sh
+npm run production
+```
 
 ## This platform is developed and maintained by Yan Marques de Cerqueira
 
