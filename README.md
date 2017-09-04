@@ -1,4 +1,4 @@
-[![NPM version][npm-image]][npm-url]
+[![NPM version][npm-image][npm-url]
 
 ## Youtube-Audio-Downloader
 - **Simple** - A simple use platform to download the audio from YouTube videos.
