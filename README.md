@@ -1,14 +1,18 @@
+[![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][npm-url] [![Build Status][travis-image]][travis-url]
+
 ## Youtube-Audio-Downloader
-A simple platform to download the audio from YouTube videos.
+- **Simple** - A simple use platform to download the audio from YouTube videos.
+- **Fast** - Everything runs fast, and when you see it is done.
+- **No Ads/No Limit Bullshit** - Download what you want without downloads limit and without ads.
 
 ## Npm commands
-    # Development
-    ```bash
+    - **Development**
+    ```sh
     npm run dev
     ```
 
-    #Production
-    ```bash
+    - **Production**
+    ```sh
     npm run production
     ```
 

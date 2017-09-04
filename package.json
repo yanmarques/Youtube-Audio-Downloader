@@ -22,5 +22,5 @@
     "gulp-minify": "^1.0.0",
     "webpack": "^3.5.5",
     "gulp-htmlmin": "^3.0.0"
-  },
+  }
 }

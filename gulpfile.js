@@ -6,11 +6,9 @@ gulp.task('minify', function() {
      gulp.src('public/*.php')
         .pipe(htmlmin({
             collapseWhitespace: true,
-            removeComments: true,
-            removeEmptyElements: true,
-            removeAttributeQuotes: true
+            removeComments: true
         }))
-        .pipe(gulp.dest('public/views'));
+        .pipe(gulp.dest('public'));
 });
 
 gulp.task('compress', function() {
