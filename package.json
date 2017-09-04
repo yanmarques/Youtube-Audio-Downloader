@@ -4,12 +4,13 @@
   "description": "A youtube audio downloader",
   "main": "webpack.config.js",
   "scripts": {
-    "dev": "webpack"
+    "dev": "webpack",
+    "production": "webpack && gulp"
   },
   "keywords": [
     "downloader",
     "youtube",
-    "python",
+    "audio",
     "php",
     "javascript"
   ],
@@ -17,6 +18,9 @@
   "license": "ISC",
   "dependencies": {
     "babel-core": "^6.26.0",
-    "webpack": "^3.5.5"
-  }
+    "gulp": "^3.9.1",
+    "gulp-minify": "^1.0.0",
+    "webpack": "^3.5.5",
+    "gulp-htmlmin": "^3.0.0"
+  },
 }

@@ -6,6 +6,26 @@
     height: -webkit-fill-available;
 }
 
+#js-app-seach-input{
+    display: none;
+}
+
+.is-active {
+    display: block !important;
+}
+
+.not-active {
+    display: none !important;
+}
+
+.button-search-down {
+    margin: 20px 0;
+}
+
+.button-loading {
+    margin-left: 100px;
+}
+
 .is-loading{
     opacity: 0.4;
     pointer-events: none;

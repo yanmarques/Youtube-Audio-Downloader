@@ -21,24 +21,13 @@ class AudioController {
 
     /**
      * Faz o download do audio do video do youtube
+     * Retorna o nome do arquivo
      *
-     * @return void
+     * @return String
      */
     public function requestAudio()
     {
-        $youtube = new Youtube($this->config(), $this->request["id"]);
+        $youtube = new Youtube($this->request["id"]);
         return $youtube->run();
-    }
-
-    /**
-     * Configuracoes para pegar o audio
-     *
-     * @return Array
-     */
-    private function config()
-    {
-        return [
-            'output' => "{$this->request['title']}.%(ext)s"
-        ];
     }
 }

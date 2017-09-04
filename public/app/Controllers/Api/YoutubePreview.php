@@ -27,7 +27,6 @@ class YoutubePreview {
      */
     public function preview()
     {
-        var_dump($this->resolveUrl());die();
         $linkPreview = new LinkPreview($this->resolveUrl());
 
         $parsed = $linkPreview->getParsed();
@@ -36,14 +35,16 @@ class YoutubePreview {
 
         foreach ($parsed as $parserName => $link) {
 
-            $attr[] = $link->getTitle() . PHP_EOL;
+            $attr['title'] = $link->getTitle() . PHP_EOL;
 
             if ($link instanceof VideoLink) {
-                $attr[] = $link->getVideoId() . PHP_EOL;
+                $attr['id'] = $link->getVideoId() . PHP_EOL;
             }
         }
 
-        return json_encode([$attr]);
+        if (count($attr) == 0) $attr = false;
+
+        return json_encode($attr);
     }
 
     /**

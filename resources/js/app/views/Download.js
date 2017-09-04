@@ -1,69 +1,39 @@
-export default class Download {
+import View from './View.js';
+
+export default class DownloadView extends View {
 
     /**
-     * Retorna uma nova instancia de Download
-     */
-    constructor() {
-        this._text;
-        this._path;
-        this._title;
-        this._disabled = false;
-    }
-
-    /**
-     * Seta o texto para o botao de download
+     * Retorna uma nova instancia de DownloadView
+     * Recebe um elemento como param que sera usado no construtor da class pai
      *
-     * @param {String} text
+     * @param {String} element
      */
-    set text(text) {
-        this._text = `${text} ${this._title}`;
+    constructor(element) {
+        super(element);
     }
 
     /**
-     * Seta o caminho para download do audio
+     * Template para o botao de download
+     * Qualquer alteracao no botao de download devera ser feita aqui
      *
-     * @param {String} title
+     * @param {Object} model
+     * @return {HTML}
      */
-    set path(path) {
-        this._path = path;
-    }
+    template(model) {
+        return `
+            <div>
+                <a href="${model.path}" class="uk-button uk-button-secondary js-download-audio" download>
+                    <span uk-icon="icon: download; ratio: 1.3" style="color: #fff;"></span>
+                    ${model.title}
+                </a>
+            </div>
 
-    /**
-     * Seta o titulo para o botao de Download
-     *
-     * @param {String} title
-     */
-    set title(title) {
-        this._title = title;
-    }
-
-    set disabled(option) {
-        if (typeof option !== 'boolean') {
-            throw new Error(`The argument must be a bool.${typeof option} given.`);
-        }
-
-        this._disabled = option;
-    }
-
-    get disabled() {
-        return this._disabled;
-    }
-
-    /**
-     * Retorna o texto
-     *
-     * @return {String} text
-     */
-    get text() {
-        return this._text;
-    }
-
-    /**
-     * Retorna o caminho para download do audio
-     *
-     * @return {String} path
-     */
-    get path() {
-        return this._path;
+            <div class="button-search-down">
+                <a class="uk-button uk-button-secondary" href="#modal-full" uk-toggle>
+                    <span uk-icon="icon: search; ratio: 1.1" style="color: #fff;"></span>
+                    Search for another music...
+                </a>
+            </div>
+        `;
     }
 }

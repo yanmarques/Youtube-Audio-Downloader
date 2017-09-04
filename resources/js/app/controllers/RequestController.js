@@ -1,9 +1,14 @@
 import Bind from '../helpers/Bind.js';
 import Audio from '../services/Audio.js';
-import Notification from '../views/Notification';
-import NotificationView from '../views/NotificationView';
-import Download from '../views/Download.js';
-import DownloadView from '../views/DownloadView.js';
+import Parse from '../services/Parse.js';
+import Notification from '../models/Notification';
+import NotificationView from '../views/Notification';
+import Download from '../models/Download.js';
+import DownloadView from '../views/Download.js';
+import App from '../views/App';
+import Loader from '../views/Loader';
+import Youtube from '../models/Youtube';
+import YoutubeView from '../views/Youtube';
 
 export default class RequestController {
     /**
@@ -15,10 +20,26 @@ export default class RequestController {
         this._inputUrl = document.querySelector('input[name=url]');
 
         this._audio = new Audio();
+        this._parse = new Parse();
+        this._loader = new Loader();
+
+        // Adiciona um proxy na classe Youtube para atualizar a YoutubeView
+        this._youtube = new Bind(
+            new Youtube(),
+            new YoutubeView('#js-youtube'),
+            'id'
+        );
 
         // Adiciona um proxy na classe notification para atualizar a notificationview
-        this._notification = new Bind(
-                new Notification(),
+        this._notificationSuccess = new Bind(
+                new Notification('success'),
+                new NotificationView('#js-message'),
+                'text'
+        );
+
+        // Adiciona um proxy na classe notification para atualizar a notificationview
+        this._notificationDanger = new Bind(
+                new Notification('danger'),
                 new NotificationView('#js-message'),
                 'text'
         );
@@ -28,40 +49,64 @@ export default class RequestController {
         this._download = new Bind(
                 new Download(),
                 new DownloadView('#js-actions'),
-                'text'
+                'fileName'
         );
     }
 
     /**
-     * Faz o request pelo audio
+     * Faz o request para download do audio
      */
-    request()
-    {
-        this._audio.requestAudio(this._inputUrl.value)
-            .then(response => {
-                let youtube = response[1];
-                let title = response[2];
+    request() {
+        App.toggle();
+        this._youtube.id = this._inputUrl.value;
 
-                response[0].then(response => this._handleResponse(response, youtube, title));
-            }).catch(err => {
-                this._notification.type = 'danger'
-                this._notification.text = err
-            })
+        this._parse.request(this._inputUrl.value)
+            .then(request => request.getResponse(response => {
+                    if ( !response) throw new Error('Ooops... A url inserida não é válida.');
+
+                    this._youtube.title = response.title;
+
+                    return this._audio.request(response.id);
+                })
+            )
+            .then(request => request.getResponse(response => {
+                if ( !response) throw new Error('Ocorreu um erro ao fazer o download. Por favor, contate o desenvolvedor.');
+
+                this._download.title = this._youtube.title;
+
+                this._download.fileName = response;
+
+                this._handleSuccessMsg();
+            }))
+            .catch(error => this._handleErrorsMsg(error.message));
+
+        this._resetInput();
     }
 
-    _handleResponse(response, youtube, title) {
-        if (response) {
-            this._notification.type = 'success';
-            this._notification.text = 'Sua musica esta pronta para download...';
-            this._download.path = youtube.path;
-            this._download.title = title;
-            this._download.text = `Download`;
-            return;
-        }
+    /**
+     * Resolve os erros recebidos pela promise lancando uma modal com o texto
+     * Automaticamente atualiza o DOM
+     *
+     * @param {String} msg
+     */
+    _handleErrorsMsg(msg) {
+        YoutubeView.hide();
+        App.toggle();
+        this._notificationDanger.text = msg;
+    }
 
-        this._notification.type = 'danger';
-        this._notification.text = 'Ooops... Ocorreu um erro no seu download. Talvez a url esteja invalida';
-        this._download.disabled = true;
-        this._download.text = `Ocorreu um erro`;
+    /**
+     * Seta a notificacao com a mensagem de sucesso
+     * Automaticamente atualiza o DOM
+     */
+    _handleSuccessMsg() {
+        this._notificationSuccess.text = 'Seu download está pronto...';
+    }
+
+    /**
+     * Limpa o campo de busca
+     */
+    _resetInput() {
+        this._inputUrl.value = '';
     }
 }

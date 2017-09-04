@@ -1,13 +1,6 @@
-export default class HttpService {
+import Request from '../models/Request';
 
-    /**
-     * Retorna uma instancia da classe HttpService
-     */
-    constructor()
-    {
-        this._protocolSuccess = [200, 201, 202];
-        this._protocolError = [404, 500, 504];
-    }
+export default class HttpService {
 
     /**
      * Faz uma requisicao do tipo GET na url
@@ -18,17 +11,23 @@ export default class HttpService {
      * @return {Promise}
      */
     get(url, config = {}) {
+
+        config.hasOwnProperty('onBeforeSend') ?
+            config.onBeforeSend() : '';
+
+        if (fetch) {
+            return fetch(url).then(response => new Request(response.status, response.json(), response))
+                .catch(error => error);
+        }
+
         return new Promise((resolve, reject) => {
             let xhr = new XMLHttpRequest();
             xhr.open('GET', url);
 
-            config.hasOwnProperty('onBeforeSend') ?
-                config.onBeforeSend() : '';
-
             xhr.onreadystatechange = () => {
                 if (this._onSuccess(xhr)) {
                     if (this._isSuccess(xhr)) {
-                        resolve(JSON.parse(xhr.responseText));
+                        resolve(new Request(xhr.status, JSON.parse(xhr.responseText), xhr));
                     }
                     else {
                         reject(xhr.responseText);
@@ -40,7 +39,6 @@ export default class HttpService {
     }
 
     /**
-     * TODO => configuration 
      * Envia uma requisicao do tipo POST na url
      * Retorna uma promise
      *
@@ -52,14 +50,19 @@ export default class HttpService {
 
         if ( ! this._validateCfg(config)) throw new Error('Missing arguments on configuration');
 
+        config.hasOwnProperty('onBeforeSend') ?
+            config.onBeforeSend() : '';
+
+        if (fetch) {
+            return fetch(url, this._requestInfo(config));
+        }
+
         return new Promise((resolve, reject) => {
             let xhr = new XMLHttpRequest();
 
             xhr.open('POST', url, true);
-            xhr.setRequestHeader("ContentType", "application/json");
 
-            config.hasOwnProperty('onBeforeSend') ?
-                config.onBeforeSend() : '';
+            xhr = this._getHeadersConfig(config, xhr, setRequestHeader);
 
             xhr.onreadystatechange = () => {
                 if (this._onSuccess(xhr)) {
@@ -81,19 +84,50 @@ export default class HttpService {
      *
      * @return {Array}
      */
-    get protocolSuccess()
-    {
-        return [].concat(this._protocolSuccess)
+    get protocolSuccess() {
+        let protocol = [];
+
+        for (let i = 200; i < 300; i++) {
+            protocol.push(i);
+        }
+
+        return protocol;
     }
 
     /**
-     * Retorna uma copia dos status de erro no request
+     * Retorna as informacoes e headers da requisicao do tipo POST
      *
-     * @return {Array}
+     * @param {Object} config
+     * @return {Object}
      */
-    get protocolError()
-    {
-        return [].concat(this._protocolError)
+    _requestInfo(config) {
+        let myHeaders = new Headers();
+        myHeaders.append('Content-Type', 'application/json');
+
+        myHeaders = this._getHeadersConfig(config, myHeaders, append);
+
+        return {
+            method : 'POST',
+            headers : myHeaders,
+            mode : 'cors'
+        };
+    }
+
+    /**
+     * Itera por todos os headers do config e seta no object pelo callback
+     *
+     * @return {Object}
+     */
+    _getHeadersConfig(config, object, callback) {
+        if ( ! config.hasOwnProperty('headers')) {
+            throw new Error('The configuration must have an key headers.');
+        }
+
+        for (let key in config.headers) {
+            object.callback(key, config.headers[key]);
+        }
+
+        return object;
     }
 
     /**
@@ -115,8 +149,7 @@ export default class HttpService {
      * @param {XMLHttpRequest} xhr
      * @return {Bool}
      */
-    _onSuccess(xhr)
-    {
+    _onSuccess(xhr) {
         return xhr.readyState == 4;
     }
 
@@ -127,8 +160,7 @@ export default class HttpService {
      * @param {XMLHttpRequest} xhr
      * @return {Bool}
      */
-    _isSuccess(xhr)
-    {
+    _isSuccess(xhr) {
         return this._protocolSuccess.includes(xhr.status);
     }
 }

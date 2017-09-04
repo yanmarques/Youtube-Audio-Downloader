@@ -1,4 +1,8 @@
+import App from '../views/App';
+
 export default class Loader{
+
+    /** TODO => refactor
 
     /**
      * Retorna uma instancia da classe Loader
@@ -8,7 +12,6 @@ export default class Loader{
         // Container onde ira ficar o loader
         this._container = document.querySelector('#js-loader');
         this._body = document.querySelector('body');
-        this._form = $('#form-center');
         this._actions = $('#js-actions');
     }
 
@@ -16,7 +19,7 @@ export default class Loader{
      * Inicia o carregamento com o spinner
      */
     load() {
-        this._form.hide();
+        App.toggle();
         this._body.classList.add(this._classBackgroundLoading);
         this._container.innerHTML = this._template();
     }
@@ -29,7 +32,7 @@ export default class Loader{
         this._body.classList.remove(this._classBackgroundLoading);
         this._body.removeAttribute("style");
         document.querySelector('html').removeAttribute("class");
-        document.querySelector(this._loaderId).remove();
+        document.querySelector('#' + this._loaderId).remove();
     }
 
     /**
@@ -47,7 +50,7 @@ export default class Loader{
      * @return {String}
      */
     get _loaderId() {
-        return '#js-loader';
+        return 'loader-gif';
     }
 
     /**

@@ -10,10 +10,8 @@ use YoutubeDl\Exception\NotFoundException;
 class Youtube {
 
     /**
-     * Configuracoes passadas no construtor
+     * Id do video
      */
-    private $config;
-
     private $id;
 
     /**
@@ -21,15 +19,16 @@ class Youtube {
      *
      * @param Array config
      */
-    function __construct($config, $id) {
-        $this->config = $config;
+    function __construct($id) {
         $this->id = $id;
+        $this->hashName = $this->generateHash();
     }
 
     /**
      * Executa o comando que faz o request do audio
+     * Retorna o nome do arquivo
      *
-     * @return void
+     * @return String
      */
     public function run()
     {
@@ -37,21 +36,21 @@ class Youtube {
         $youtubeDl->setDownloadPath($this->downloadPath());
 
         try {
-            $youtubeDl->download($this->getYoutubeUrl());
+            $video = $youtubeDl->download($this->getYoutubeUrl());
         } catch(NotFoundException $e) {
             return false;
         } catch(\Exception $e) {
             return false;
         }
 
-        return true;
+        return $video['file']->getFilename();
     }
 
     /**
      * Instancia a classe para fazer o download do audio
      * Thanks to norkunas's Youtube-dl wrapper for PHP on Github
      *
-     * @return String
+     * @return YoutubeDl
      */
     private function buildDl()
     {
@@ -61,7 +60,6 @@ class Youtube {
     /**
      * Gera uma url do youtube
      *
-     * @param String id
      * @return String
      */
     private function getYoutubeUrl() {
@@ -80,6 +78,7 @@ class Youtube {
     /**
      * Resolve as configuracoes passadas no construtor
      * Retorna as opcoes do comando
+     *
      * @return String
      */
     private function resolveConfig()
@@ -88,13 +87,18 @@ class Youtube {
             'extract-audio' => true,
             'audio-format' => 'mp3',
             'audio-quality' => 0,
-            'output' => '%(title)s.%(ext)s'
+            'output' => "{$this->generateHash()}.%(ext)s"
         ];
 
-        if (isset($this->config['output'])) {
-            $options['output'] = $this->config['output'];
-        }
-
         return $options;
+    }
+
+    /**
+     * Gera um hash com o nome do arquivo a ser salvo a partir do ID do video
+     *
+     * @return String
+     */
+    private function generateHash() {
+        return hash('md5', $this->id);
     }
 }
