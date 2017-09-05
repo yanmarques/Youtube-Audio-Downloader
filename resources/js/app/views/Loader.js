@@ -19,7 +19,7 @@ export default class Loader{
      * Inicia o carregamento com o spinner
      */
     load() {
-        App.toggle();
+        App.hide();
         this._body.classList.add(this._classBackgroundLoading);
         this._container.innerHTML = this._template();
     }
@@ -28,6 +28,7 @@ export default class Loader{
      * Finaliza o carregamento
      */
     stop() {
+        App.active();
         this._actions.show();
         this._body.classList.remove(this._classBackgroundLoading);
         this._body.removeAttribute("style");

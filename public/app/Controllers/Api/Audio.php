@@ -1,13 +1,34 @@
 <?php
+
 namespace App\Controllers\Api;
 
 require_once dirname(dirname(dirname(dirname(__DIR__)))) . '/vendor/autoload.php';
 
-use App\Controllers\Api\AudioController;
+use App\Models\Youtube;
+use YoutubeDl\YoutubeDl;
+use App\Interfaces\ApiRequests;
 
-// Instancia a classe AudioController para fazer a requisicao do audio
-$audioController = new AudioController($_GET);
-$response = $audioController->requestAudio();
+class Audio implements ApiRequests {
 
-header('Content-Type: application/json');
-echo json_encode($response);
+    /**
+     * Request com as variaveis
+     */
+    private $request;
+
+    function __construct($request)
+    {
+        $this->request = $request;
+    }
+
+    /**
+     * Faz o download do audio do video do youtube
+     * Retorna o nome do arquivo
+     *
+     * @return String
+     */
+    public function request()
+    {
+        $youtube = new Youtube($this->request["id"]);
+        return $youtube->run();
+    }
+}

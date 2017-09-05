@@ -1,21 +1,20 @@
-import HttpService from './HttpService';
+import RequestServices from './RequestServices';
 import Url from '../helpers/Url';
-import Modal from '../views/Modal';
 
-export default class Parse {
+export default class Parse extends RequestServices {
 
     /**
      * Retorna uma instancia de Parse
      */
     constructor() {
-        this._http = new HttpService();
+        super();
     }
 
     /**
      * Url para fazer o parse da Url inserida buscando o id e o titulo
      */
     get _path() {
-        return '/app/Controllers/Api/Parse.php';
+        return '/app/Controllers/ParseController.php';
     }
 
     /**
@@ -25,7 +24,8 @@ export default class Parse {
      * @return {Promise}
      */
     request(url) {
-        Modal.close();
-        return this._http.get(Url.convert(this._path, `url=${url}`));
+        return this._http.get(Url.convert(this._path, {
+            'url' : url
+        }));
     }
 }

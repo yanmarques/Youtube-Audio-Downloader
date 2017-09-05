@@ -22,10 +22,16 @@ export default class DownloadView extends View {
     template(model) {
         return `
             <div>
-                <a href="${model.path}" class="uk-button uk-button-secondary js-download-audio" download>
-                    <span uk-icon="icon: download; ratio: 1.3" style="color: #fff;"></span>
-                    ${model.title}
-                </a>
+                <form action="${model.action}" method="GET">
+
+                    <input type="hidden" name="title" value="${model.title}">
+                    <input type="hidden" name="fileName" value="${model.fileName}">
+
+                    <button type="submit" id="btn-download" class="uk-button uk-button-secondary js-download-audio">
+                        <span uk-icon="icon: download; ratio: 1.3" style="color: #fff;"></span>
+                        Download ${model.title}
+                    </button>
+                </fom>
             </div>
 
             <div class="button-search-down">

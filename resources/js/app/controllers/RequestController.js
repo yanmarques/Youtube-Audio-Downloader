@@ -6,9 +6,14 @@ import NotificationView from '../views/Notification';
 import Download from '../models/Download.js';
 import DownloadView from '../views/Download.js';
 import App from '../views/App';
-import Loader from '../views/Loader';
 import Youtube from '../models/Youtube';
 import YoutubeView from '../views/Youtube';
+import SearchVideos from '../services/SearchVideos';
+import Modal from '../views/Modal';
+import SearchModel from '../models/SearchVideos';
+import SearchView from '../views/SearchVideos';
+import WaitForDownload from '../views/WaitForDownload';
+import Loader from '../views/Loader';
 
 export default class RequestController {
     /**
@@ -21,7 +26,14 @@ export default class RequestController {
 
         this._audio = new Audio();
         this._parse = new Parse();
+        this._searchVideos = new SearchVideos();
         this._loader = new Loader();
+
+        this._searchModel = new Bind(
+            new SearchModel(),
+            new SearchView('#js-search-videos'),
+            'content'
+        );
 
         // Adiciona um proxy na classe Youtube para atualizar a YoutubeView
         this._youtube = new Bind(
@@ -56,11 +68,39 @@ export default class RequestController {
     /**
      * Faz o request para download do audio
      */
-    request() {
-        App.toggle();
-        this._youtube.id = this._inputUrl.value;
+    request(id = null) {
 
-        this._parse.request(this._inputUrl.value)
+        const result = id === null ? this._inputUrl.value : Youtube.generateUrl(id);
+
+        let isUrl = Youtube.isUrl(result);
+
+        this._resetInput();
+        Modal.close();
+
+        if (isUrl) {
+            return this.youtubeVideo(result);
+        }
+
+        YoutubeView.remove();
+        WaitForDownload.hide();
+
+        this._searchVideos.request(result)
+            .then(request => request.getResponse(response => {
+                this._loader.stop();
+                this._searchModel.content = response;
+            }));
+    }
+
+    /**
+     *  Faz o request para download do audio
+     */
+    youtubeVideo(inputUrl) {
+        App.hide();
+        SearchView.remove();
+
+        this._youtube.id = inputUrl;
+
+        this._parse.request(inputUrl)
             .then(request => request.getResponse(response => {
                     if ( !response) throw new Error('Ooops... A url inserida não é válida.');
 
@@ -79,8 +119,6 @@ export default class RequestController {
                 this._handleSuccessMsg();
             }))
             .catch(error => this._handleErrorsMsg(error.message));
-
-        this._resetInput();
     }
 
     /**
@@ -91,6 +129,7 @@ export default class RequestController {
      */
     _handleErrorsMsg(msg) {
         YoutubeView.hide();
+        WaitForDownload.hide();
         App.toggle();
         this._notificationDanger.text = msg;
     }

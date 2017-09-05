@@ -25,10 +25,10 @@ export default class Youtube extends View {
     /**
      * Esconde o video do Youtube
      */
-    static hide() {
+    static remove() {
         let container = document.querySelector('#js-youtube');
 
-        ! container.classList.contains('not-active') ? container.classList.add('not-active') :'';
+        container.innerHTML = '';
     }
 
     /**
@@ -40,9 +40,8 @@ export default class Youtube extends View {
      */
     template(model) {
 
-        this._element.classList.contains('not-active') ? this._element.classList.remove('not-active') :'';
         return `<div class="video-frame">
-                    <iframe id="ytplayer" type="text/html" width="840" height="460" src="http://www.youtube.com/embed/${model.id}?autoplay=1" frameborder="0" uk-responsive/>
+                    <iframe id="ytplayer" type="text/html" width="840" height="460" src="https://www.youtube.com/embed/${model.id}?autoplay=1" frameborder="0" uk-responsive/>
                 </div>
         `;
     }

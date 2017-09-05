@@ -1,41 +1,40 @@
-import Youtube from './Youtube';
+import Url from '../helpers/Url';
 
-export default class Download extends Youtube{
+export default class Download {
 
     /**
      * Retorna uma nova instancia de Download
      */
     constructor() {
-        super();
         this._title;
         this._fileName;
     }
 
     /**
-     * Retorna o texto
+     * Retorna o title do audio
      *
-     * @return {String} text
+     * @return {String}
      */
     get title() {
         return this._title;
     }
 
     /**
-     * Retorna o caminho onde o video esta armazenado
+     * Retorna o nome do arquivo salvo no servidor
      *
-     * @return {String} path
+     * @return {String}
      */
-    get path() {
-        return `app/uploads/${this._fileName}`;
+    get fileName() {
+        return this._fileName;
     }
 
     /**
-     * Seta o texto para o botao de download
+     * Retorna o caminho para fazer o download
      *
-     * @param {String} text
+     * @return {String} path
      */
-    set title(title) {
-        this._title = `Download ${title}`;
+    get action() {
+        return '/app/Controllers/DownloadController.php';
     }
 
     /**
@@ -45,5 +44,14 @@ export default class Download extends Youtube{
      */
     set fileName(fileName) {
         this._fileName = fileName;
+    }
+
+    /**
+     * Seta o titlo da musica
+     *
+     * @param {String} title
+     */
+    set title(title) {
+        this._title = title;
     }
 }

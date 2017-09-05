@@ -19,8 +19,9 @@
   "dependencies": {
     "babel-core": "^6.26.0",
     "gulp": "^3.9.1",
+    "gulp-clean-css": "^3.8.0",
+    "gulp-htmlmin": "^3.0.0",
     "gulp-minify": "^1.0.0",
-    "webpack": "^3.5.5",
-    "gulp-htmlmin": "^3.0.0"
+    "webpack": "^3.5.5"
   }
 }

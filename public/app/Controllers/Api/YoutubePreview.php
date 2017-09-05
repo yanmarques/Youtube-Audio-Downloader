@@ -6,8 +6,9 @@ require_once dirname(dirname(dirname(dirname(__DIR__)))) . '/vendor/autoload.php
 
 use LinkPreview\LinkPreview;
 use LinkPreview\Model\VideoLink;
+use App\Interfaces\ApiRequests;
 
-class YoutubePreview {
+class YoutubePreview implements ApiRequests {
 
     /**
      * Request com as variaveis
@@ -25,7 +26,7 @@ class YoutubePreview {
      *
      * @return Json
      */
-    public function preview()
+    public function request()
     {
         $linkPreview = new LinkPreview($this->resolveUrl());
 

@@ -4,9 +4,9 @@ export default class App extends View {
 
     /**
      * Retorna uma instancia da class App que extende View
+     * Recebe um elemento como param que sera usado no construtor da class pai
      *
      * @param {HTML} element
-     * @return {Object}
      */
     constructor(element) {
         super(element);
@@ -14,16 +14,23 @@ export default class App extends View {
     }
 
     /**
-     * Functiona como um toggle, quando o metodo update e chamado ele alterna
-     * entre os estados do elemento, visivel ou nao
+     * Esconde o elemento
      */
-    static toggle() {
+    static hide() {
         let element = document.querySelector('#js-app-seach-input');
 
         if (element.classList.contains('is-active')) {
             element.classList.remove('is-active');
         }
-        else {
+    }
+
+    /**
+     * Mostra o elemento
+     */
+    static active() {
+        let element = document.querySelector('#js-app-seach-input');
+
+        if ( ! element.classList.contains('is-active')) {
             element.classList.add('is-active');
         }
     }

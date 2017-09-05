@@ -32,6 +32,11 @@ class Youtube {
      */
     public function run()
     {
+        // Se arquivo ja existe
+        if (file_exists($this->downloadPath() . '/' . $this->hashName . '.mp3')) {
+            return $this->hashName . '.mp3';
+        }
+
         $youtubeDl = $this->buildDl();
         $youtubeDl->setDownloadPath($this->downloadPath());
 

@@ -4,7 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="youtube, download, audio, music, stream,"/>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="A platform to find and download Youtube videos."/>
+
     <title>Youtube Downloader</title>
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Youter">
+    <meta property="og:locale" content="en">
+    <meta property="og:book:author" content="Youter">
+    <meta property="og:title" content="Youter - Your favorite YouTube music downloader">
+    <meta property="og:description" content="A platform to find and download Youtube videos.">
+    <meta property="og:url" content="http://youter.tk/">
 
     <!-- UIkit CSS -->
     <link rel="stylesheet" href="uikit/css/uikit.min.css" />
@@ -23,6 +35,7 @@
             <!-- Imagem de fundo -->
             <div class="uk-background-cover uk-background-fixed slide background-img-1 uk-panel"></div>
 
+            <!-- Spinner de carregando -->
             <div id="js-loader" class="uk-position-center"></div>
 
             <!-- Form generico de pesquisa de fundo -->
@@ -35,6 +48,9 @@
             <div id="js-actions" class="uk-position-medium uk-position-bottom-center"></div>
 
         </div>
+
+        <!-- Resultado da pesquisa -->
+        <div id="js-search-videos" class="uk-margin uk-container"></div>
 
         <section>
             <!-- Heading -->
@@ -129,7 +145,7 @@
         <div class="uk-modal-dialog uk-flex uk-flex-center uk-flex-middle" uk-height-viewport>
             <button class="uk-modal-close-full" type="button" uk-close></button>
             <form id="js-form-request" class="uk-search uk-search-large">
-                <input name="url" class="uk-search-input uk-text-center" type="search" placeholder="https://..." autofocus>
+                <input name="url" class="uk-search-input uk-text-center" type="search" placeholder="Type what you are looking for..." autofocus>
             </form>
         </div>
     </div>

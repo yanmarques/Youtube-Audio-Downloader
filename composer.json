@@ -13,7 +13,8 @@
         "kasp3r/link-preview": "dev-master",
         "guzzlehttp/guzzle": "^6.2@dev",
         "norkunas/youtube-dl-php": "^0.3.3",
-        "php-ffmpeg/php-ffmpeg": "^0.9.5"
+        "php-ffmpeg/php-ffmpeg": "^0.9.5",
+        "symfony/symfony": "3.4.x-dev"
     },
     "autoload": {
         "psr-4": {

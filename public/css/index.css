@@ -22,6 +22,11 @@
     margin: 20px 0;
 }
 
+.img-center {
+    position: relative;
+    left: 30%;
+}
+
 .button-loading {
     margin-left: 100px;
 }

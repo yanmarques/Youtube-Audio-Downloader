@@ -6,6 +6,7 @@ export default class Youtube {
     constructor() {
         this._id;
         this._title;
+        this._query;
     }
 
     /**
@@ -39,5 +40,24 @@ export default class Youtube {
      */
     set title(title) {
         this._title = title;
+    }
+
+    /**
+     * Verifica se a url passada e uma Url do youtube valida
+     *
+     * @return {Boolean}
+     */
+    static isUrl(url) {
+        return /^https:\/\/(?:www\.|m\.)?youtube\.com\/watch\?v=.+(&\S*)?$/.test(url);
+    }
+
+    /**
+     * Gera uma url valida a partir do ID do video
+     *
+     * @param {String} id
+     * @return {String}
+     */
+    static generateUrl(id) {
+        return `https://www.youtube.com/watch?v=${id}`;
     }
 }
