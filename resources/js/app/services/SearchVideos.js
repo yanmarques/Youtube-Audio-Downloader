@@ -9,6 +9,7 @@ export default class SearchVideos extends RequestServices {
      * Retorna uma instancia de Parse
      */
     constructor() {
+        super();
         this._http = new HttpService();
         this.loader = new Loader();
     }
