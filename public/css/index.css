@@ -89,3 +89,7 @@ section, .uk-container {
 .background-img-4{
     background-image: url(../img/usjwkausj83k.jpeg);
 }
+
+.img-search-result:hover {
+    cursor: pointer;
+}

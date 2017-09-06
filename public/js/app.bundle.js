@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 7);
+/******/ 	return __webpack_require__(__webpack_require__.s = 8);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -253,7 +253,7 @@ class App extends __WEBPACK_IMPORTED_MODULE_0__View__["a" /* default */] {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__models_Request__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__models_Request__ = __webpack_require__(15);
 
 
 class HttpService {
@@ -461,21 +461,29 @@ class WaitForDownload extends __WEBPACK_IMPORTED_MODULE_0__View__["a" /* default
 
         this._element.classList.contains('not-active') ? this._element.classList.remove('not-active') :'';
 
-        return `
-            <div class="button-loading">
-                <button class="uk-button uk-button-secondary">
-                    <div uk-spinner></div>
-                </button>
-            </div>
+        // <div class="button-loading">
+        //     <button class="uk-button uk-button-secondary">
+        //         <div uk-spinner></div>
+        //     </button>
+        // </div>
 
-            <div class="button-search-down">
-                <form>
-                    <button type="submit" class="uk-button uk-button-secondary" href="#modal-full" uk-toggle>
-                        <span uk-icon="icon: search; ratio: 1.1" style="color: #fff;"></span>
-                        Search for another music...
-                    </button>
-                </form>
-            </div>
+        // <div class="button-search-down">
+        //     <form>
+        //         <button type="submit" class="uk-button uk-button-secondary" href="#modal-full" uk-toggle>
+        //             <span uk-icon="icon: search; ratio: 1.1" style="color: #fff;"></span>
+        //             Search for another music...
+        //         </button>
+        //     </form>
+        // </div>
+
+        return `
+            <button form="form-download" class="uk-button uk-button-secondary uk-width-1-1 uk-margin-small-bottom">
+                 <div uk-spinner></div>
+            </button>
+            <button class="uk-button uk-button-secondary uk-width-1-1 uk-margin-small-bottom js-button-show-modal">
+                <span uk-icon="icon: search; ratio: 1.1" style="color: #fff;"></span>
+                Search for another music...
+            </button>
         `;
     }
 }
@@ -564,9 +572,36 @@ class Loader{
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+class Modal {
+
+    /**
+     * Fecha a modal de pesquisa
+     */
+    static close() {
+        let element  = document.querySelector('#modal-full');
+        UIkit.modal(element).hide();
+    }
+
+    /**
+     * Abre a modal de pesquisa
+     */
+    static show() {
+        let element  = document.querySelector('#modal-full');
+        UIkit.modal(element).show();
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Modal;
+
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_Carousel_js__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__controllers_RequestController_js__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_Carousel_js__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_Listeners__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__views_App__ = __webpack_require__(3);
 
 
@@ -575,39 +610,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 let app = new __WEBPACK_IMPORTED_MODULE_2__views_App__["a" /* default */]('#js-app-seach-input');
 app.update();
 
-const formRequest = document.querySelector('#js-form-request');
-const requestController = new __WEBPACK_IMPORTED_MODULE_1__controllers_RequestController_js__["a" /* default */]();
-const fakeSubmit = document.querySelector('.uk-search-input');
-const searchResult = document.querySelector('#js-search-videos');
+__WEBPACK_IMPORTED_MODULE_1__services_Listeners__["a" /* default */].init();
 
 $(document).ready(function() {
     new __WEBPACK_IMPORTED_MODULE_0__helpers_Carousel_js__["a" /* default */]('.slide');
-    UIkit.scroll('body').scrollTo('#top');
-});
-
-// Adiciona um listener de submit na pesquisa
-formRequest.addEventListener('submit', event => {
-        event.preventDefault();
-        requestController.request();
-    }
-);
-
-// Adiciona um listener de focus na 'falsa' pesquisa que abre a modal de pesquisa
-fakeSubmit.addEventListener('focus', () => {
-    fakeSubmit.blur();
-});
-
-// Aciciona um listener de click nos elemento das pesquisas
-searchResult.addEventListener('click', event => {
-    event.preventDefault();
-    if (event.target.classList.contains('js-video-result')) {
-        requestController.request(event.target.getAttribute('video-id'));
-    }
+    $(this).scrollTop(0);
 });
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -711,24 +723,82 @@ class Carousel {
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_Bind_js__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_Audio_js__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_Parse_js__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_Notification__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__views_Notification__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__models_Download_js__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__views_Download_js__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__controllers_RequestController_js__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__views_Modal__ = __webpack_require__(7);
+
+
+
+class Listeners {
+
+    /**
+     * Inicializa os listeners da pagina
+     */
+    static init() {
+        const formRequest = document.querySelector('#js-form-request');
+        const requestController = new __WEBPACK_IMPORTED_MODULE_0__controllers_RequestController_js__["a" /* default */]();
+        const fakeSubmit = document.querySelector('.uk-search-input');
+        const searchResult = document.querySelector('#js-search-videos');
+        const buttonActions = document.querySelector('#js-actions');
+
+        // Adiciona um listener de submit na pesquisa
+        formRequest.addEventListener('submit', event => {
+                event.preventDefault();
+                requestController.request();
+            }
+        );
+
+        // Adiciona um listener de focus na 'falsa' pesquisa que abre a modal de pesquisa
+        fakeSubmit.addEventListener('focus', () => {
+            fakeSubmit.blur();
+        });
+
+        // Aciciona um listener de click nos elemento das pesquisas
+        searchResult.addEventListener('click', event => {
+            event.preventDefault();
+
+            if (event.target.classList.contains('js-video-result')) {
+                console.log(event.target.getAttribute('video-id'));
+                requestController.request(event.target.getAttribute('video-id'));
+            }
+        });
+
+        // Aciciona um listener de click na div para abrir modal
+        buttonActions.addEventListener('click', event => {
+            event.preventDefault();
+
+            if (event.target.classList.contains('js-button-show-modal')) {
+                __WEBPACK_IMPORTED_MODULE_1__views_Modal__["a" /* default */].show();
+            }
+        });
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Listeners;
+
+
+
+/***/ }),
+/* 11 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_Bind_js__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_Audio_js__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_Parse_js__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_Notification__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__views_Notification__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__models_Download_js__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__views_Download_js__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__views_App__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__models_Youtube__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__views_Youtube__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_SearchVideos__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__views_Modal__ = __webpack_require__(22);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__models_SearchVideos__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__views_SearchVideos__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__models_Youtube__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__views_Youtube__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_SearchVideos__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__views_Modal__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__models_SearchVideos__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__views_SearchVideos__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__views_WaitForDownload__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__views_Loader__ = __webpack_require__(6);
 
@@ -890,11 +960,11 @@ class RequestController {
 
 
 /***/ }),
-/* 10 */
+/* 12 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__models_ProxyFactory__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__models_ProxyFactory__ = __webpack_require__(13);
 
 
 class Bind {
@@ -911,7 +981,7 @@ class Bind {
 
 
 /***/ }),
-/* 11 */
+/* 13 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -962,7 +1032,7 @@ class ProxyFactory {
 
 
 /***/ }),
-/* 12 */
+/* 14 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1010,7 +1080,7 @@ class Audio extends __WEBPACK_IMPORTED_MODULE_0__RequestServices__["a" /* defaul
 
 
 /***/ }),
-/* 13 */
+/* 15 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1064,7 +1134,7 @@ class Request {
 
 
 /***/ }),
-/* 14 */
+/* 16 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1106,7 +1176,7 @@ class Parse extends __WEBPACK_IMPORTED_MODULE_0__RequestServices__["a" /* defaul
 
 
 /***/ }),
-/* 15 */
+/* 17 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1153,7 +1223,7 @@ class Notification {
 
 
 /***/ }),
-/* 16 */
+/* 18 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1199,7 +1269,7 @@ class NotificationView extends __WEBPACK_IMPORTED_MODULE_0__View_js__["a" /* def
 
 
 /***/ }),
-/* 17 */
+/* 19 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1266,7 +1336,7 @@ class Download {
 
 
 /***/ }),
-/* 18 */
+/* 20 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1293,27 +1363,36 @@ class DownloadView extends __WEBPACK_IMPORTED_MODULE_0__View_js__["a" /* default
      * @return {HTML}
      */
     template(model) {
+        // <div class="button-search-down">
+        //     <form>
+        //         <button type="submit" class="uk-button uk-button-secondary" href="#modal-full" uk-toggle>
+        //             <span uk-icon="icon: search; ratio: 1.1" style="color: #fff;"></span>
+        //             Search for another music...
+        //         </button>
+        //     </form>
+        // </div>
+
+        // <button type="submit" id="btn-download" class="uk-button uk-button-secondary js-download-audio">
+        //     <span uk-icon="icon: download; ratio: 1.3" style="color: #fff;"></span>
+        //     Download ${model.title}
+        // </button>
+
         return `
             <div>
-                <form action="${model.action}" method="GET">
+                <form action="${model.action}" method="GET" id="form-download">
 
                     <input type="hidden" name="title" value="${model.title}">
                     <input type="hidden" name="fileName" value="${model.fileName}">
 
-                    <button type="submit" id="btn-download" class="uk-button uk-button-secondary js-download-audio">
-                        <span uk-icon="icon: download; ratio: 1.3" style="color: #fff;"></span>
-                        Download ${model.title}
-                    </button>
                 </fom>
-            </div>
-
-            <div class="button-search-down">
-                <form>
-                    <button type="submit" class="uk-button uk-button-secondary" href="#modal-full" uk-toggle>
-                        <span uk-icon="icon: search; ratio: 1.1" style="color: #fff;"></span>
-                        Search for another music...
-                    </button>
-                </form>
+                <button form="form-download" class="uk-button uk-button-secondary uk-width-1-1 uk-margin-small-bottom">
+                    <span uk-icon="icon: download; ratio: 1.3" style="color: #fff;"></span>
+                    Download ${model.title}
+                </button>
+                <button class="uk-button uk-button-secondary uk-width-1-1 uk-margin-small-bottom js-button-show-modal">
+                    <span uk-icon="icon: search; ratio: 1.1" style="color: #fff;"></span>
+                    Search for another music...
+                </button>
             </div>
         `;
     }
@@ -1323,7 +1402,7 @@ class DownloadView extends __WEBPACK_IMPORTED_MODULE_0__View_js__["a" /* default
 
 
 /***/ }),
-/* 19 */
+/* 21 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1395,7 +1474,7 @@ class Youtube {
 
 
 /***/ }),
-/* 20 */
+/* 22 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1454,7 +1533,7 @@ class Youtube extends __WEBPACK_IMPORTED_MODULE_0__View__["a" /* default */] {
 
 
 /***/ }),
-/* 21 */
+/* 23 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1504,34 +1583,7 @@ class SearchVideos extends __WEBPACK_IMPORTED_MODULE_3__RequestServices__["a" /*
 
 
 /***/ }),
-/* 22 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-class Modal {
-
-    /**
-     * Fecha a modal de pesquisa
-     */
-    static close()
-    {
-        let html = document.querySelector('html');
-        let body = document.querySelector('body');
-        let div  = document.querySelector('#modal-full');
-
-        body.removeAttribute("style");
-        html.removeAttribute("class");
-        
-        $(div).fadeOut(200);
-        setTimeout(() => div.classList.remove('.uk-open'), 2000);
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = Modal;
-
-
-
-/***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1648,7 +1700,7 @@ class SearchVideos {
                 src = item.img.getAttribute('data-thumb');
             }
 
-            item.img = this._imageTemplate(src, item.title.textContent);
+            item.img = this._imageTemplate(item.id, src, item.title.textContent);
             item.title = this._titleTemplate(item.id, item.title.textContent);
             item.description = item.description !== null ? item.description.textContent : '';
 
@@ -1663,8 +1715,8 @@ class SearchVideos {
      * @param {String} title
      * @return {HTML}
      */
-    _imageTemplate(src, title) {
-        return  `<img class="uk-transition-scale-up uk-transition-opaque" title="${title}" alt="${title}" src="${src}" width="420" height="312">`;
+    _imageTemplate(id, src, title) {
+        return  `<img class="img-search-result uk-transition-scale-up uk-transition-opaque js-video-result" video-id="${id}" title="${title}" alt="${title}" src="${src}" width="420" height="312">`;
     }
 
     /**
@@ -1683,7 +1735,7 @@ class SearchVideos {
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1740,9 +1792,7 @@ class SearchVideos extends __WEBPACK_IMPORTED_MODULE_0__View__["a" /* default */
                     <div class="uk-card uk-card-muted">
                         <h3 class="uk-card-title text-center">${item.title}</h3>
                         <div class="uk-inline-clip uk-transition-toggle">
-                           <a class="js-video-result section-content-img" video-id="${item.id}">
-                               ${item.img}
-                           </a>
+                            ${item.img}
                        </div>
                     </div>
                 </div>

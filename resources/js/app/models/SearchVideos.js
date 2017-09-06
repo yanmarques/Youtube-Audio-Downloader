@@ -111,7 +111,7 @@ export default class SearchVideos {
                 src = item.img.getAttribute('data-thumb');
             }
 
-            item.img = this._imageTemplate(src, item.title.textContent);
+            item.img = this._imageTemplate(item.id, src, item.title.textContent);
             item.title = this._titleTemplate(item.id, item.title.textContent);
             item.description = item.description !== null ? item.description.textContent : '';
 
@@ -126,8 +126,8 @@ export default class SearchVideos {
      * @param {String} title
      * @return {HTML}
      */
-    _imageTemplate(src, title) {
-        return  `<img class="uk-transition-scale-up uk-transition-opaque" title="${title}" alt="${title}" src="${src}" width="420" height="312">`;
+    _imageTemplate(id, src, title) {
+        return  `<img class="img-search-result uk-transition-scale-up uk-transition-opaque js-video-result" video-id="${id}" title="${title}" alt="${title}" src="${src}" width="420" height="312">`;
     }
 
     /**

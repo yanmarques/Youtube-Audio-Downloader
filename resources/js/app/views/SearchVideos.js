@@ -50,9 +50,7 @@ export default class SearchVideos extends View {
                     <div class="uk-card uk-card-muted">
                         <h3 class="uk-card-title text-center">${item.title}</h3>
                         <div class="uk-inline-clip uk-transition-toggle">
-                           <a class="js-video-result section-content-img" video-id="${item.id}">
-                               ${item.img}
-                           </a>
+                            ${item.img}
                        </div>
                     </div>
                 </div>

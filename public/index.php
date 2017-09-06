@@ -45,7 +45,7 @@
             <div id="js-youtube" class="uk-position-medium uk-position-top-center"></div>
 
             <!-- Acoes do usuario -->
-            <div id="js-actions" class="uk-position-medium uk-position-bottom-center"></div>
+            <div id="js-actions" class="uk-position-bottom-center uk-flex uk-flex-center uk-width-1-2@s"></div>
 
         </div>
 
