@@ -15,6 +15,7 @@ export default class Listeners {
 
         // Adiciona um listener de submit na pesquisa
         formRequest.addEventListener('submit', event => {
+                console.log("Passou", event.target);
                 event.preventDefault();
                 requestController.request();
             }
@@ -27,6 +28,8 @@ export default class Listeners {
 
         // Aciciona um listener de click nos elemento das pesquisas
         searchResult.addEventListener('click', event => {
+
+            console.log("Passou", event.target);
             event.preventDefault();
 
             if (event.target.classList.contains('js-video-result')) {
@@ -36,10 +39,13 @@ export default class Listeners {
 
         // Aciciona um listener de click na div para abrir modal
         buttonActions.addEventListener('click', event => {
+
             event.preventDefault();
 
-            if (event.target.classList.contains('js-button-show-modal')) {
+            if (event.target.classList.contains('js-btn-show-modal')) {
                 Modal.show();
+            } else if (event.target.classList.contains('js-btn-download')) {
+                document.querySelector('#form-download').submit();
             }
         });
     }

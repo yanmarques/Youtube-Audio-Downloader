@@ -29,21 +29,6 @@ export default class WaitForDownload extends View {
 
         this._element.classList.contains('not-active') ? this._element.classList.remove('not-active') :'';
 
-        // <div class="button-loading">
-        //     <button class="uk-button uk-button-secondary">
-        //         <div uk-spinner></div>
-        //     </button>
-        // </div>
-
-        // <div class="button-search-down">
-        //     <form>
-        //         <button type="submit" class="uk-button uk-button-secondary" href="#modal-full" uk-toggle>
-        //             <span uk-icon="icon: search; ratio: 1.1" style="color: #fff;"></span>
-        //             Search for another music...
-        //         </button>
-        //     </form>
-        // </div>
-
         return `
             <button form="form-download" class="uk-button uk-button-secondary uk-width-1-1 uk-margin-small-bottom">
                  <div uk-spinner></div>

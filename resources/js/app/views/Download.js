@@ -20,16 +20,8 @@ export default class DownloadView extends View {
      * @return {HTML}
      */
     template(model) {
-        // <div class="button-search-down">
-        //     <form>
-        //         <button type="submit" class="uk-button uk-button-secondary" href="#modal-full" uk-toggle>
-        //             <span uk-icon="icon: search; ratio: 1.1" style="color: #fff;"></span>
-        //             Search for another music...
-        //         </button>
-        //     </form>
-        // </div>
 
-        // <button type="submit" id="btn-download" class="uk-button uk-button-secondary js-download-audio">
+        // <input class="uk-button uk-button-secondary uk-width-1-1 uk-margin-small-bottom" type="button" value="Download ${model.title}"/>
         //     <span uk-icon="icon: download; ratio: 1.3" style="color: #fff;"></span>
         //     Download ${model.title}
         // </button>
@@ -38,15 +30,17 @@ export default class DownloadView extends View {
             <div>
                 <form action="${model.action}" method="GET" id="form-download">
 
-                    <input type="hidden" name="title" value="${model.title}">
-                    <input type="hidden" name="fileName" value="${model.fileName}">
+                    <input type="hidden" name="title" value="${model.title}" />
+                    <input type="hidden" name="fileName" value="${model.fileName}" />
 
-                </fom>
-                <button form="form-download" class="uk-button uk-button-secondary uk-width-1-1 uk-margin-small-bottom">
+                </form>
+
+                <button class="uk-button uk-button-secondary uk-width-1-1 uk-margin-small-bottom js-btn-download">
                     <span uk-icon="icon: download; ratio: 1.3" style="color: #fff;"></span>
                     Download ${model.title}
                 </button>
-                <button class="uk-button uk-button-secondary uk-width-1-1 uk-margin-small-bottom js-button-show-modal">
+
+                <button class="uk-button uk-button-secondary uk-width-1-1 uk-margin-small-bottom js-btn-show-modal">
                     <span uk-icon="icon: search; ratio: 1.1" style="color: #fff;"></span>
                     Search for another music...
                 </button>

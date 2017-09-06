@@ -45,21 +45,14 @@ export default class SearchVideos extends View {
         }
 
         return model.html.map(item =>
-            `<div class="uk-grid-large uk-child-width-expand@s" uk-grid>
-                <div>
-                    <div class="uk-card uk-card-muted">
-                        <h3 class="uk-card-title text-center">${item.title}</h3>
-                        <div class="uk-inline-clip uk-transition-toggle">
-                            ${item.img}
-                       </div>
-                    </div>
+            `<div class="uk-flex-middle" uk-grid>
+                <div class="uk-width-2-3@m uk-text-justify uk-text-large">
+                    ${item.description}
                 </div>
-
-                <div>
-                    <div class="uk-card uk-card-default">
-                        <div class="uk-text-justify uk-text-large">
-                            ${item.description}
-                        </div>
+                <div class="uk-width-1-3@m uk-flex-first">
+                    <h3 class="uk-card-title text-center">${item.title}</h3>
+                    <div class="uk-inline-clip uk-transition-toggle">
+                        ${item.img}
                     </div>
                 </div>
             </div>`

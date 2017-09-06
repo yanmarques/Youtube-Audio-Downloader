@@ -461,21 +461,6 @@ class WaitForDownload extends __WEBPACK_IMPORTED_MODULE_0__View__["a" /* default
 
         this._element.classList.contains('not-active') ? this._element.classList.remove('not-active') :'';
 
-        // <div class="button-loading">
-        //     <button class="uk-button uk-button-secondary">
-        //         <div uk-spinner></div>
-        //     </button>
-        // </div>
-
-        // <div class="button-search-down">
-        //     <form>
-        //         <button type="submit" class="uk-button uk-button-secondary" href="#modal-full" uk-toggle>
-        //             <span uk-icon="icon: search; ratio: 1.1" style="color: #fff;"></span>
-        //             Search for another music...
-        //         </button>
-        //     </form>
-        // </div>
-
         return `
             <button form="form-download" class="uk-button uk-button-secondary uk-width-1-1 uk-margin-small-bottom">
                  <div uk-spinner></div>
@@ -746,6 +731,7 @@ class Listeners {
 
         // Adiciona um listener de submit na pesquisa
         formRequest.addEventListener('submit', event => {
+                console.log("Passou", event.target);
                 event.preventDefault();
                 requestController.request();
             }
@@ -758,6 +744,8 @@ class Listeners {
 
         // Aciciona um listener de click nos elemento das pesquisas
         searchResult.addEventListener('click', event => {
+
+            console.log("Passou", event.target);
             event.preventDefault();
 
             if (event.target.classList.contains('js-video-result')) {
@@ -767,10 +755,13 @@ class Listeners {
 
         // Aciciona um listener de click na div para abrir modal
         buttonActions.addEventListener('click', event => {
+
             event.preventDefault();
 
-            if (event.target.classList.contains('js-button-show-modal')) {
+            if (event.target.classList.contains('js-btn-show-modal')) {
                 __WEBPACK_IMPORTED_MODULE_1__views_Modal__["a" /* default */].show();
+            } else if (event.target.classList.contains('js-btn-download')) {
+                document.querySelector('#form-download').submit();
             }
         });
     }
@@ -1362,16 +1353,8 @@ class DownloadView extends __WEBPACK_IMPORTED_MODULE_0__View_js__["a" /* default
      * @return {HTML}
      */
     template(model) {
-        // <div class="button-search-down">
-        //     <form>
-        //         <button type="submit" class="uk-button uk-button-secondary" href="#modal-full" uk-toggle>
-        //             <span uk-icon="icon: search; ratio: 1.1" style="color: #fff;"></span>
-        //             Search for another music...
-        //         </button>
-        //     </form>
-        // </div>
 
-        // <button type="submit" id="btn-download" class="uk-button uk-button-secondary js-download-audio">
+        // <input class="uk-button uk-button-secondary uk-width-1-1 uk-margin-small-bottom" type="button" value="Download ${model.title}"/>
         //     <span uk-icon="icon: download; ratio: 1.3" style="color: #fff;"></span>
         //     Download ${model.title}
         // </button>
@@ -1380,15 +1363,17 @@ class DownloadView extends __WEBPACK_IMPORTED_MODULE_0__View_js__["a" /* default
             <div>
                 <form action="${model.action}" method="GET" id="form-download">
 
-                    <input type="hidden" name="title" value="${model.title}">
-                    <input type="hidden" name="fileName" value="${model.fileName}">
+                    <input type="hidden" name="title" value="${model.title}" />
+                    <input type="hidden" name="fileName" value="${model.fileName}" />
 
-                </fom>
-                <button form="form-download" class="uk-button uk-button-secondary uk-width-1-1 uk-margin-small-bottom">
+                </form>
+
+                <button class="uk-button uk-button-secondary uk-width-1-1 uk-margin-small-bottom js-btn-download">
                     <span uk-icon="icon: download; ratio: 1.3" style="color: #fff;"></span>
                     Download ${model.title}
                 </button>
-                <button class="uk-button uk-button-secondary uk-width-1-1 uk-margin-small-bottom js-button-show-modal">
+
+                <button class="uk-button uk-button-secondary uk-width-1-1 uk-margin-small-bottom js-btn-show-modal">
                     <span uk-icon="icon: search; ratio: 1.1" style="color: #fff;"></span>
                     Search for another music...
                 </button>
@@ -1786,21 +1771,14 @@ class SearchVideos extends __WEBPACK_IMPORTED_MODULE_0__View__["a" /* default */
         }
 
         return model.html.map(item =>
-            `<div class="uk-grid-large uk-child-width-expand@s" uk-grid>
-                <div>
-                    <div class="uk-card uk-card-muted">
-                        <h3 class="uk-card-title text-center">${item.title}</h3>
-                        <div class="uk-inline-clip uk-transition-toggle">
-                            ${item.img}
-                       </div>
-                    </div>
+            `<div class="uk-flex-middle" uk-grid>
+                <div class="uk-width-2-3@m uk-text-justify uk-text-large">
+                    ${item.description}
                 </div>
-
-                <div>
-                    <div class="uk-card uk-card-default">
-                        <div class="uk-text-justify uk-text-large">
-                            ${item.description}
-                        </div>
+                <div class="uk-width-1-3@m uk-flex-first">
+                    <h3 class="uk-card-title text-center">${item.title}</h3>
+                    <div class="uk-inline-clip uk-transition-toggle">
+                        ${item.img}
                     </div>
                 </div>
             </div>`
