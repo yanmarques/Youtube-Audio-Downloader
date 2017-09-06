@@ -87,6 +87,7 @@ export default class RequestController {
         this._searchVideos.request(result)
             .then(request => request.getResponse(response => {
                 this._loader.stop();
+                UIkit.scroll('body').scrollTo('#js-search-videos');
                 this._searchModel.content = response;
             }));
     }
@@ -97,6 +98,8 @@ export default class RequestController {
     youtubeVideo(inputUrl) {
         App.hide();
         SearchView.remove();
+
+        UIkit.scroll('body').scrollTo('#top');
 
         this._youtube.id = inputUrl;
 

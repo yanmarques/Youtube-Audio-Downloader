@@ -26,7 +26,7 @@
 
 </head>
 <body>
-    <div class="uk-cover-container platform-body">
+    <div id="top" class="uk-cover-container">
         <div class="uk-position-relative">
 
             <!-- Notificacoes -->

@@ -127,7 +127,7 @@ export default class SearchVideos {
      * @return {HTML}
      */
     _imageTemplate(src, title) {
-        return  `<img title="${title}" alt="${title}" src="${src}" width="420" height="312">`;
+        return  `<img class="uk-transition-scale-up uk-transition-opaque" title="${title}" alt="${title}" src="${src}" width="420" height="312">`;
     }
 
     /**

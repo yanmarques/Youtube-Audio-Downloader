@@ -12,6 +12,7 @@ const searchResult = document.querySelector('#js-search-videos');
 
 $(document).ready(function() {
     new Carousel('.slide');
+    UIkit.scroll('body').scrollTo('#top');
 });
 
 // Adiciona um listener de submit na pesquisa

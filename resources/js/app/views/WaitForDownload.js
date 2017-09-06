@@ -37,10 +37,12 @@ export default class WaitForDownload extends View {
             </div>
 
             <div class="button-search-down">
-                <a class="uk-button uk-button-secondary" href="#modal-full" uk-toggle>
-                    <span uk-icon="icon: search; ratio: 1.1" style="color: #fff;"></span>
-                    Search for another music...
-                </a>
+                <form>
+                    <button type="submit" class="uk-button uk-button-secondary" href="#modal-full" uk-toggle>
+                        <span uk-icon="icon: search; ratio: 1.1" style="color: #fff;"></span>
+                        Search for another music...
+                    </button>
+                </form>
             </div>
         `;
     }

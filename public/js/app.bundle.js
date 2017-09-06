@@ -469,10 +469,12 @@ class WaitForDownload extends __WEBPACK_IMPORTED_MODULE_0__View__["a" /* default
             </div>
 
             <div class="button-search-down">
-                <a class="uk-button uk-button-secondary" href="#modal-full" uk-toggle>
-                    <span uk-icon="icon: search; ratio: 1.1" style="color: #fff;"></span>
-                    Search for another music...
-                </a>
+                <form>
+                    <button type="submit" class="uk-button uk-button-secondary" href="#modal-full" uk-toggle>
+                        <span uk-icon="icon: search; ratio: 1.1" style="color: #fff;"></span>
+                        Search for another music...
+                    </button>
+                </form>
             </div>
         `;
     }
@@ -580,6 +582,7 @@ const searchResult = document.querySelector('#js-search-videos');
 
 $(document).ready(function() {
     new __WEBPACK_IMPORTED_MODULE_0__helpers_Carousel_js__["a" /* default */]('.slide');
+    UIkit.scroll('body').scrollTo('#top');
 });
 
 // Adiciona um listener de submit na pesquisa
@@ -817,6 +820,7 @@ class RequestController {
         this._searchVideos.request(result)
             .then(request => request.getResponse(response => {
                 this._loader.stop();
+                UIkit.scroll('body').scrollTo('#js-search-videos');
                 this._searchModel.content = response;
             }));
     }
@@ -827,6 +831,8 @@ class RequestController {
     youtubeVideo(inputUrl) {
         __WEBPACK_IMPORTED_MODULE_7__views_App__["a" /* default */].hide();
         __WEBPACK_IMPORTED_MODULE_13__views_SearchVideos__["a" /* default */].remove();
+
+        UIkit.scroll('body').scrollTo('#top');
 
         this._youtube.id = inputUrl;
 
@@ -1302,10 +1308,12 @@ class DownloadView extends __WEBPACK_IMPORTED_MODULE_0__View_js__["a" /* default
             </div>
 
             <div class="button-search-down">
-                <a class="uk-button uk-button-secondary" href="#modal-full" uk-toggle>
-                    <span uk-icon="icon: search; ratio: 1.1" style="color: #fff;"></span>
-                    Search for another music...
-                </a>
+                <form>
+                    <button type="submit" class="uk-button uk-button-secondary" href="#modal-full" uk-toggle>
+                        <span uk-icon="icon: search; ratio: 1.1" style="color: #fff;"></span>
+                        Search for another music...
+                    </button>
+                </form>
             </div>
         `;
     }
@@ -1465,6 +1473,7 @@ class SearchVideos extends __WEBPACK_IMPORTED_MODULE_3__RequestServices__["a" /*
      * Retorna uma instancia de Parse
      */
     constructor() {
+        super();
         this._http = new __WEBPACK_IMPORTED_MODULE_0__HttpService__["a" /* default */]();
         this.loader = new __WEBPACK_IMPORTED_MODULE_2__views_Loader__["a" /* default */]();
     }
@@ -1655,7 +1664,7 @@ class SearchVideos {
      * @return {HTML}
      */
     _imageTemplate(src, title) {
-        return  `<img title="${title}" alt="${title}" src="${src}" width="420" height="312">`;
+        return  `<img class="uk-transition-scale-up uk-transition-opaque" title="${title}" alt="${title}" src="${src}" width="420" height="312">`;
     }
 
     /**
@@ -1730,9 +1739,11 @@ class SearchVideos extends __WEBPACK_IMPORTED_MODULE_0__View__["a" /* default */
                 <div>
                     <div class="uk-card uk-card-muted">
                         <h3 class="uk-card-title text-center">${item.title}</h3>
-                        <a class="js-video-result section-content-img" video-id="${item.id}">
-                            ${item.img}
-                        </a>
+                        <div class="uk-inline-clip uk-transition-toggle">
+                           <a class="js-video-result section-content-img" video-id="${item.id}">
+                               ${item.img}
+                           </a>
+                       </div>
                     </div>
                 </div>
 
