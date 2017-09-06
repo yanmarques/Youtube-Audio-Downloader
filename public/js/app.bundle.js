@@ -761,7 +761,6 @@ class Listeners {
             event.preventDefault();
 
             if (event.target.classList.contains('js-video-result')) {
-                console.log(event.target.getAttribute('video-id'));
                 requestController.request(event.target.getAttribute('video-id'));
             }
         });
@@ -934,9 +933,9 @@ class RequestController {
      * @param {String} msg
      */
     _handleErrorsMsg(msg) {
-        __WEBPACK_IMPORTED_MODULE_9__views_Youtube__["a" /* default */].hide();
+        __WEBPACK_IMPORTED_MODULE_9__views_Youtube__["a" /* default */].remove();
         __WEBPACK_IMPORTED_MODULE_14__views_WaitForDownload__["a" /* default */].hide();
-        __WEBPACK_IMPORTED_MODULE_7__views_App__["a" /* default */].toggle();
+        __WEBPACK_IMPORTED_MODULE_7__views_App__["a" /* default */].active();
         this._notificationDanger.text = msg;
     }
 

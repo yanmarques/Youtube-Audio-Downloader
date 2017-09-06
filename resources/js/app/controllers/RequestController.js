@@ -131,9 +131,9 @@ export default class RequestController {
      * @param {String} msg
      */
     _handleErrorsMsg(msg) {
-        YoutubeView.hide();
+        YoutubeView.remove();
         WaitForDownload.hide();
-        App.toggle();
+        App.active();
         this._notificationDanger.text = msg;
     }
 

@@ -1,2 +1,4 @@
 vendor
 node_modules
+public/js
+public/app/uploads

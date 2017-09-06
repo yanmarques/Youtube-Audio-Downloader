@@ -30,7 +30,6 @@ export default class Listeners {
             event.preventDefault();
 
             if (event.target.classList.contains('js-video-result')) {
-                console.log(event.target.getAttribute('video-id'));
                 requestController.request(event.target.getAttribute('video-id'));
             }
         });
